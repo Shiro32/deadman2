@@ -28,9 +28,9 @@ Version 4.0 HI-TECH Software Intermediate Code
 "386 ./mcc_generated_files/pin_manager.h
 [; ;./mcc_generated_files/pin_manager.h: 386: void IOCAF2_SetInterruptHandler(void (* InterruptHandler)(void));
 [v _IOCAF2_SetInterruptHandler `(v ~T0 @X0 0 ef1`*F11647 ]
-[v F12075 `(v ~T0 @X0 0 tf ]
-"184 main.c
-[; ;main.c: 184: _Bool AverageHumanSensor(void);
+[v F12078 `(v ~T0 @X0 0 tf ]
+"197 main.c
+[; ;main.c: 197: _Bool AverageHumanSensor(void);
 [v _AverageHumanSensor `(a ~T0 @X0 0 ef ]
 "396 C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC16F1xxxx_DFP/1.24.387/xc8\pic\include\proc\pic16f18857.h
 [; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC16F1xxxx_DFP/1.24.387/xc8\pic\include\proc\pic16f18857.h: 396:     struct {
@@ -1636,7 +1636,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [v _HumanSensorTimer_s `us ~T0 @X0 1 e ]
 "81
 [; ;main.c: 81: uint8_t SegPattern[] =
-[v _SegPattern `uc ~T0 @X0 -> 12 `i e ]
+[v _SegPattern `uc ~T0 @X0 -> 16 `i e ]
 [i _SegPattern
 :U ..
 -> -> 63 `i `uc
@@ -1649,8 +1649,12 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> -> 7 `i `uc
 -> -> 127 `i `uc
 -> -> 103 `i `uc
--> -> 64 `i `uc
--> -> 255 `i `uc
+-> -> 1 `i `uc
+-> -> 2 `i `uc
+-> -> 4 `i `uc
+-> -> 8 `i `uc
+-> -> 16 `i `uc
+-> -> 32 `i `uc
 ..
 ]
 "85
@@ -1747,385 +1751,441 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;main.c: 129: }
 [e :UE 1562 ]
 }
+"133
+[; ;main.c: 133: void Circulate7Seg( void ) {
+[v _Circulate7Seg `(v ~T0 @X0 1 ef ]
+{
+[e :U _Circulate7Seg ]
+[f ]
 "134
-[; ;main.c: 134: void Blink7Seg( uint16_t value ) {
+[; ;main.c: 134:     uint8_t i, j;
+[v _i `uc ~T0 @X0 1 a ]
+[v _j `uc ~T0 @X0 1 a ]
+"136
+[; ;main.c: 136:     for( i=0; i<30; i++) {
+{
+[e = _i -> -> 0 `i `uc ]
+[e $ < -> _i `i -> 30 `i 1564  ]
+[e $U 1565  ]
+[e :U 1564 ]
+{
+"137
+[; ;main.c: 137:         for( j=10; j<16; j++ ) {
+{
+[e = _j -> -> 10 `i `uc ]
+[e $ < -> _j `i -> 16 `i 1567  ]
+[e $U 1568  ]
+[e :U 1567 ]
+{
+"138
+[; ;main.c: 138:             SegBuffer[0] = SegPattern[j];
+[e = *U + &U _SegBuffer * -> -> -> 0 `i `ui `ux -> -> # *U &U _SegBuffer `ui `ux *U + &U _SegPattern * -> _j `ux -> -> # *U &U _SegPattern `ui `ux ]
+"139
+[; ;main.c: 139:             SegBuffer[1] = SegPattern[j];
+[e = *U + &U _SegBuffer * -> -> -> 1 `i `ui `ux -> -> # *U &U _SegBuffer `ui `ux *U + &U _SegPattern * -> _j `ux -> -> # *U &U _SegPattern `ui `ux ]
+"140
+[; ;main.c: 140:             _delay((unsigned long)((20)*(8000000/4000.0)));
+[e ( __delay (1 -> * -> -> 20 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
+"141
+[; ;main.c: 141:         }
+}
+[e ++ _j -> -> 1 `i `uc ]
+[e $ < -> _j `i -> 16 `i 1567  ]
+[e :U 1568 ]
+}
+"142
+[; ;main.c: 142:     }
+}
+[e ++ _i -> -> 1 `i `uc ]
+[e $ < -> _i `i -> 30 `i 1564  ]
+[e :U 1565 ]
+}
+"143
+[; ;main.c: 143: }
+[e :UE 1563 ]
+}
+"148
+[; ;main.c: 148: void Blink7Seg( uint16_t value ) {
 [v _Blink7Seg `(v ~T0 @X0 1 ef1`us ]
 {
 [e :U _Blink7Seg ]
 [v _value `us ~T0 @X0 1 r1 ]
 [f ]
-"135
-[; ;main.c: 135:     uint8_t i;
+"149
+[; ;main.c: 149:     uint8_t i;
 [v _i `uc ~T0 @X0 1 a ]
-"137
-[; ;main.c: 137:     for( i=0; i<3; i++ ) {
+"151
+[; ;main.c: 151:     for( i=0; i<3; i++ ) {
 {
 [e = _i -> -> 0 `i `uc ]
-[e $ < -> _i `i -> 3 `i 1564  ]
-[e $U 1565  ]
-[e :U 1564 ]
+[e $ < -> _i `i -> 3 `i 1571  ]
+[e $U 1572  ]
+[e :U 1571 ]
 {
-"138
-[; ;main.c: 138:         Draw7Seg( value, 0, 0 );
+"152
+[; ;main.c: 152:         Draw7Seg( value, 0, 0 );
 [e ( _Draw7Seg (3 , , _value -> -> 0 `i `a -> -> 0 `i `a ]
-"139
-[; ;main.c: 139:         _delay((unsigned long)((200)*(8000000/4000.0)));
+"153
+[; ;main.c: 153:         _delay((unsigned long)((200)*(8000000/4000.0)));
 [e ( __delay (1 -> * -> -> 200 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
-"140
-[; ;main.c: 140:         SegBuffer[0] = 0;
+"154
+[; ;main.c: 154:         SegBuffer[0] = 0;
 [e = *U + &U _SegBuffer * -> -> -> 0 `i `ui `ux -> -> # *U &U _SegBuffer `ui `ux -> -> 0 `i `uc ]
-"141
-[; ;main.c: 141:         SegBuffer[1] = 0;
+"155
+[; ;main.c: 155:         SegBuffer[1] = 0;
 [e = *U + &U _SegBuffer * -> -> -> 1 `i `ui `ux -> -> # *U &U _SegBuffer `ui `ux -> -> 0 `i `uc ]
-"142
-[; ;main.c: 142:         _delay((unsigned long)((200)*(8000000/4000.0))) ;
+"156
+[; ;main.c: 156:         _delay((unsigned long)((200)*(8000000/4000.0))) ;
 [e ( __delay (1 -> * -> -> 200 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
-"143
-[; ;main.c: 143:     }
+"157
+[; ;main.c: 157:     }
 }
 [e ++ _i -> -> 1 `i `uc ]
-[e $ < -> _i `i -> 3 `i 1564  ]
-[e :U 1565 ]
+[e $ < -> _i `i -> 3 `i 1571  ]
+[e :U 1572 ]
 }
-"144
-[; ;main.c: 144: }
-[e :UE 1563 ]
+"158
+[; ;main.c: 158: }
+[e :UE 1570 ]
 }
-"148
-[; ;main.c: 148: void Clear7Seg( void ) {
+"161
+[; ;main.c: 161: void Clear7Seg( void ) {
 [v _Clear7Seg `(v ~T0 @X0 1 ef ]
 {
 [e :U _Clear7Seg ]
 [f ]
-"149
-[; ;main.c: 149:     SegBuffer[0] = 0;
+"162
+[; ;main.c: 162:     SegBuffer[0] = 0;
 [e = *U + &U _SegBuffer * -> -> -> 0 `i `ui `ux -> -> # *U &U _SegBuffer `ui `ux -> -> 0 `i `uc ]
-"150
-[; ;main.c: 150:     SegBuffer[1] = 0;
+"163
+[; ;main.c: 163:     SegBuffer[1] = 0;
 [e = *U + &U _SegBuffer * -> -> -> 1 `i `ui `ux -> -> # *U &U _SegBuffer `ui `ux -> -> 0 `i `uc ]
-"151
-[; ;main.c: 151: }
-[e :UE 1567 ]
+"164
+[; ;main.c: 164: }
+[e :UE 1574 ]
 }
-"158
-[; ;main.c: 158: void INT_PushSW( void ) {
+"171
+[; ;main.c: 171: void INT_PushSW( void ) {
 [v _INT_PushSW `(v ~T0 @X0 1 ef ]
 {
 [e :U _INT_PushSW ]
 [f ]
-"159
-[; ;main.c: 159:     IOCAF2 = 0;
+"172
+[; ;main.c: 172:     IOCAF2 = 0;
 [e = _IOCAF2 -> -> 0 `i `b ]
-"160
-[; ;main.c: 160:     IOCAF2_SetInterruptHandler(((void*)0));
-[e ( _IOCAF2_SetInterruptHandler (1 -> -> -> 0 `i `*v `*F12075 ]
-"161
-[; ;main.c: 161:     DeadmanTimer_s += 600;
+"173
+[; ;main.c: 173:     IOCAF2_SetInterruptHandler(((void*)0));
+[e ( _IOCAF2_SetInterruptHandler (1 -> -> -> 0 `i `*v `*F12078 ]
+"174
+[; ;main.c: 174:     DeadmanTimer_s += 600;
 [e =+ _DeadmanTimer_s -> -> 600 `i `us ]
-"162
-[; ;main.c: 162:     SystemMode = MODE_RESUME;
+"175
+[; ;main.c: 175:     SystemMode = MODE_RESUME;
 [e = _SystemMode . `E12051 1 ]
-"163
-[; ;main.c: 163: }
-[e :UE 1568 ]
+"176
+[; ;main.c: 176: }
+[e :UE 1575 ]
 }
-"169
-[; ;main.c: 169: void HandleSSR( void ) {
+"182
+[; ;main.c: 182: void HandleSSR( void ) {
 [v _HandleSSR `(v ~T0 @X0 1 ef ]
 {
 [e :U _HandleSSR ]
 [f ]
-"170
-[; ;main.c: 170:     LATAbits.LATA3 = ( SSROutputStatus && HumanSensorStatus ) ? 1:0;
+"183
+[; ;main.c: 183:     LATAbits.LATA3 = ( SSROutputStatus && HumanSensorStatus ) ? 1:0;
 [e = . . _LATAbits 0 3 -> ? && != -> _SSROutputStatus `i -> 0 `i != -> _HumanSensorStatus `i -> 0 `i : -> 1 `i -> 0 `i `uc ]
-"171
-[; ;main.c: 171: }
-[e :UE 1569 ]
+"184
+[; ;main.c: 184: }
+[e :UE 1576 ]
 }
-[v F12078 `(v ~T0 @X0 1 tf ]
-"176
-[; ;main.c: 176: __attribute__((inline)) void TurnOnSSR( void ) { SSROutputStatus = 1; }
-[v _TurnOnSSR `TF12078 ~T0 @X0 1 e ]
+[v F12081 `(v ~T0 @X0 1 tf ]
+"189
+[; ;main.c: 189: __attribute__((inline)) void TurnOnSSR( void ) { SSROutputStatus = 1; }
+[v _TurnOnSSR `TF12081 ~T0 @X0 1 e ]
 {
 [e :U _TurnOnSSR ]
 [f ]
 [e = _SSROutputStatus -> -> 1 `i `a ]
-[e :UE 1570 ]
+[e :UE 1577 ]
 }
-[v F12080 `(v ~T0 @X0 1 tf ]
-"177
-[; ;main.c: 177: __attribute__((inline)) void TurnOffSSR( void ) { SSROutputStatus = 0; }
-[v _TurnOffSSR `TF12080 ~T0 @X0 1 e ]
+[v F12083 `(v ~T0 @X0 1 tf ]
+"190
+[; ;main.c: 190: __attribute__((inline)) void TurnOffSSR( void ) { SSROutputStatus = 0; }
+[v _TurnOffSSR `TF12083 ~T0 @X0 1 e ]
 {
 [e :U _TurnOffSSR ]
 [f ]
 [e = _SSROutputStatus -> -> 0 `i `a ]
-[e :UE 1571 ]
+[e :UE 1578 ]
 }
-"188
-[; ;main.c: 188: void CheckHumanSensor( void ) {
+"201
+[; ;main.c: 201: void CheckHumanSensor( void ) {
 [v _CheckHumanSensor `(v ~T0 @X0 1 ef ]
 {
 [e :U _CheckHumanSensor ]
 [f ]
-"189
-[; ;main.c: 189:     static uint16_t lastTimer_s = 0;
-[v F12083 `us ~T0 @X0 1 s lastTimer_s ]
-[i F12083
+"202
+[; ;main.c: 202:     static uint16_t lastTimer_s = 0;
+[v F12086 `us ~T0 @X0 1 s lastTimer_s ]
+[i F12086
 -> -> 0 `i `us
 ]
-"192
-[; ;main.c: 192:     if( HumanSensorStatus ) {
-[e $ ! != -> _HumanSensorStatus `i -> 0 `i 1573  ]
-{
-"194
-[; ;main.c: 194:         if( !AverageHumanSensor() ) {
-[e $ ! ! != -> ( _AverageHumanSensor ..  `i -> 0 `i 1574  ]
-{
-"195
-[; ;main.c: 195:             lastTimer_s ++;
-[e ++ F12083 -> -> 1 `i `us ]
-"196
-[; ;main.c: 196:             if( lastTimer_s > 30 ) HumanSensorStatus = 0;
-[e $ ! > -> F12083 `ui -> -> 30 `i `ui 1575  ]
-[e = _HumanSensorStatus -> -> 0 `i `a ]
-[e :U 1575 ]
-"197
-[; ;main.c: 197:         }
-}
-[e :U 1574 ]
-"199
-[; ;main.c: 199:     } else {
-}
-[e $U 1576  ]
-[e :U 1573 ]
-{
-"201
-[; ;main.c: 201:         if( AverageHumanSensor() ) {
-[e $ ! != -> ( _AverageHumanSensor ..  `i -> 0 `i 1577  ]
-{
-"202
-[; ;main.c: 202:             HumanSensorStatus = 1;
-[e = _HumanSensorStatus -> -> 1 `i `a ]
-"203
-[; ;main.c: 203:             lastTimer_s = 0;
-[e = F12083 -> -> 0 `i `us ]
-"204
-[; ;main.c: 204:         }
-}
-[e :U 1577 ]
 "205
-[; ;main.c: 205:     }
+[; ;main.c: 205:     if( HumanSensorStatus ) {
+[e $ ! != -> _HumanSensorStatus `i -> 0 `i 1580  ]
+{
+"207
+[; ;main.c: 207:         if( !AverageHumanSensor() ) {
+[e $ ! ! != -> ( _AverageHumanSensor ..  `i -> 0 `i 1581  ]
+{
+"208
+[; ;main.c: 208:             lastTimer_s ++;
+[e ++ F12086 -> -> 1 `i `us ]
+"209
+[; ;main.c: 209:             if( lastTimer_s > 30 ) HumanSensorStatus = 0;
+[e $ ! > -> F12086 `ui -> -> 30 `i `ui 1582  ]
+[e = _HumanSensorStatus -> -> 0 `i `a ]
+[e :U 1582 ]
+"210
+[; ;main.c: 210:         }
 }
-[e :U 1576 ]
-"206
-[; ;main.c: 206: }
-[e :UE 1572 ]
+[e :U 1581 ]
+"212
+[; ;main.c: 212:     } else {
 }
-"211
-[; ;main.c: 211: _Bool AverageHumanSensor() {
+[e $U 1583  ]
+[e :U 1580 ]
+{
+"214
+[; ;main.c: 214:         if( AverageHumanSensor() ) {
+[e $ ! != -> ( _AverageHumanSensor ..  `i -> 0 `i 1584  ]
+{
+"215
+[; ;main.c: 215:             HumanSensorStatus = 1;
+[e = _HumanSensorStatus -> -> 1 `i `a ]
+"216
+[; ;main.c: 216:             lastTimer_s = 0;
+[e = F12086 -> -> 0 `i `us ]
+"217
+[; ;main.c: 217:         }
+}
+[e :U 1584 ]
+"218
+[; ;main.c: 218:     }
+}
+[e :U 1583 ]
+"219
+[; ;main.c: 219: }
+[e :UE 1579 ]
+}
+"224
+[; ;main.c: 224: _Bool AverageHumanSensor() {
 [v _AverageHumanSensor `(a ~T0 @X0 1 ef ]
 {
 [e :U _AverageHumanSensor ]
 [f ]
-"212
-[; ;main.c: 212:     static _Bool buf[ 5 ];
-[v F12085 `a ~T0 @X0 -> 5 `i s buf ]
-"213
-[; ;main.c: 213:     uint8_t i;
+"225
+[; ;main.c: 225:     static _Bool buf[ 5 ];
+[v F12088 `a ~T0 @X0 -> 5 `i s buf ]
+"226
+[; ;main.c: 226:     uint8_t i;
 [v _i `uc ~T0 @X0 1 a ]
-"214
-[; ;main.c: 214:     int8_t sum=0;
+"227
+[; ;main.c: 227:     int8_t sum=0;
 [v _sum `c ~T0 @X0 1 a ]
 [e = _sum -> -> 0 `i `c ]
-"217
-[; ;main.c: 217:     for( i=5 -1; i>0; i-- ) {
+"230
+[; ;main.c: 230:     for( i=5 -1; i>0; i-- ) {
 {
 [e = _i -> - -> 5 `i -> 1 `i `uc ]
-[e $ > -> _i `i -> 0 `i 1579  ]
-[e $U 1580  ]
-[e :U 1579 ]
+[e $ > -> _i `i -> 0 `i 1586  ]
+[e $U 1587  ]
+[e :U 1586 ]
 {
-"218
-[; ;main.c: 218:         sum+=buf[i];
-[e =+ _sum -> *U + &U F12085 * -> _i `ux -> -> # *U &U F12085 `ui `ux `c ]
-"219
-[; ;main.c: 219:         buf[i] = buf[i-1];
-[e = *U + &U F12085 * -> _i `ux -> -> # *U &U F12085 `ui `ux *U + &U F12085 * -> -> - -> _i `i -> 1 `i `ui `ux -> -> # *U &U F12085 `ui `ux ]
-"220
-[; ;main.c: 220:     }
+"231
+[; ;main.c: 231:         sum+=buf[i];
+[e =+ _sum -> *U + &U F12088 * -> _i `ux -> -> # *U &U F12088 `ui `ux `c ]
+"232
+[; ;main.c: 232:         buf[i] = buf[i-1];
+[e = *U + &U F12088 * -> _i `ux -> -> # *U &U F12088 `ui `ux *U + &U F12088 * -> -> - -> _i `i -> 1 `i `ui `ux -> -> # *U &U F12088 `ui `ux ]
+"233
+[; ;main.c: 233:     }
 }
 [e -- _i -> -> 1 `i `uc ]
-[e $ > -> _i `i -> 0 `i 1579  ]
-[e :U 1580 ]
+[e $ > -> _i `i -> 0 `i 1586  ]
+[e :U 1587 ]
 }
-"224
-[; ;main.c: 224:     buf[0] = PORTAbits.RA4;
-[e = *U + &U F12085 * -> -> -> 0 `i `ui `ux -> -> # *U &U F12085 `ui `ux -> . . _PORTAbits 0 4 `a ]
-"225
-[; ;main.c: 225:     sum+=buf[0];
-[e =+ _sum -> *U + &U F12085 * -> -> -> 0 `i `ui `ux -> -> # *U &U F12085 `ui `ux `c ]
-"227
-[; ;main.c: 227:     return ( (float)sum/5 > 0.1 ) ? 1:0;
+"237
+[; ;main.c: 237:     buf[0] = PORTAbits.RA4;
+[e = *U + &U F12088 * -> -> -> 0 `i `ui `ux -> -> # *U &U F12088 `ui `ux -> . . _PORTAbits 0 4 `a ]
+"238
+[; ;main.c: 238:     sum+=buf[0];
+[e =+ _sum -> *U + &U F12088 * -> -> -> 0 `i `ui `ux -> -> # *U &U F12088 `ui `ux `c ]
+"240
+[; ;main.c: 240:     return ( (float)sum/5 > 0.1 ) ? 1:0;
 [e ) -> ? > -> / -> _sum `f -> -> 5 `i `f `d .0.1 : -> 1 `i -> 0 `i `a ]
-[e $UE 1578  ]
-"228
-[; ;main.c: 228: }
-[e :UE 1578 ]
+[e $UE 1585  ]
+"241
+[; ;main.c: 241: }
+[e :UE 1585 ]
 }
 [v $root$_main `(v ~T0 @X0 0 e ]
-"232
-[; ;main.c: 232: void main(void)
+"245
+[; ;main.c: 245: void main(void)
 [v _main `(v ~T0 @X0 1 ef ]
-"233
-[; ;main.c: 233: {
+"246
+[; ;main.c: 246: {
 {
 [e :U _main ]
 [f ]
-"235
-[; ;main.c: 235:     LATAbits.LATA0 = 0;
-[e = . . _LATAbits 0 0 -> -> 0 `i `uc ]
-"236
-[; ;main.c: 236:     LATAbits.LATA1 = 0;
-[e = . . _LATAbits 0 1 -> -> 0 `i `uc ]
-"237
-[; ;main.c: 237:  SegBuffer[0] = SegPattern[0];
-[e = *U + &U _SegBuffer * -> -> -> 0 `i `ui `ux -> -> # *U &U _SegBuffer `ui `ux *U + &U _SegPattern * -> -> -> 0 `i `ui `ux -> -> # *U &U _SegPattern `ui `ux ]
-"238
-[; ;main.c: 238:  SegBuffer[1] = SegPattern[0];
-[e = *U + &U _SegBuffer * -> -> -> 1 `i `ui `ux -> -> # *U &U _SegBuffer `ui `ux *U + &U _SegPattern * -> -> -> 0 `i `ui `ux -> -> # *U &U _SegPattern `ui `ux ]
-"241
-[; ;main.c: 241:     SYSTEM_Initialize();
-[e ( _SYSTEM_Initialize ..  ]
-"244
-[; ;main.c: 244:     SystemMode = MODE_START;
-[e = _SystemMode . `E12051 0 ]
-"246
-[; ;main.c: 246:     TMR2_SetInterruptHandler( TMR2_Refresh7Seg );
-[e ( _TMR2_SetInterruptHandler (1 &U _TMR2_Refresh7Seg ]
 "248
-[; ;main.c: 248:     IOCAF2_SetInterruptHandler( INT_PushSW );
-[e ( _IOCAF2_SetInterruptHandler (1 &U _INT_PushSW ]
+[; ;main.c: 248:     LATAbits.LATA0 = 0;
+[e = . . _LATAbits 0 0 -> -> 0 `i `uc ]
+"249
+[; ;main.c: 249:     LATAbits.LATA1 = 0;
+[e = . . _LATAbits 0 1 -> -> 0 `i `uc ]
 "250
-[; ;main.c: 250:     (INTCONbits.GIE = 1);
-[e = . . _INTCONbits 0 3 -> -> 1 `i `uc ]
+[; ;main.c: 250:  SegBuffer[0] = SegPattern[0];
+[e = *U + &U _SegBuffer * -> -> -> 0 `i `ui `ux -> -> # *U &U _SegBuffer `ui `ux *U + &U _SegPattern * -> -> -> 0 `i `ui `ux -> -> # *U &U _SegPattern `ui `ux ]
 "251
-[; ;main.c: 251:     (INTCONbits.PEIE = 1);
-[e = . . _INTCONbits 0 2 -> -> 1 `i `uc ]
-"253
-[; ;main.c: 253:  while(1) {
-[e :U 1584 ]
-{
-"255
-[; ;main.c: 255:         _delay((unsigned long)((1000)*(8000000/4000.0)));
-[e ( __delay (1 -> * -> -> 1000 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
+[; ;main.c: 251:  SegBuffer[1] = SegPattern[0];
+[e = *U + &U _SegBuffer * -> -> -> 1 `i `ui `ux -> -> # *U &U _SegBuffer `ui `ux *U + &U _SegPattern * -> -> -> 0 `i `ui `ux -> -> # *U &U _SegPattern `ui `ux ]
+"254
+[; ;main.c: 254:     SYSTEM_Initialize();
+[e ( _SYSTEM_Initialize ..  ]
 "257
-[; ;main.c: 257:         DeadmanTimer_s--;
-[e -- _DeadmanTimer_s -> -> 1 `i `us ]
-"258
-[; ;main.c: 258:         CheckHumanSensor();
-[e ( _CheckHumanSensor ..  ]
+[; ;main.c: 257:     SystemMode = MODE_START;
+[e = _SystemMode . `E12051 0 ]
 "259
-[; ;main.c: 259:         HandleSSR();
-[e ( _HandleSSR ..  ]
-"262
-[; ;main.c: 262:         switch( SystemMode ) {
-[e $U 1587  ]
-{
-"263
-[; ;main.c: 263:         case MODE_START:
-[e :U 1588 ]
-"264
-[; ;main.c: 264:             DeadmanTimer_s = 80;
-[e = _DeadmanTimer_s -> -> 80 `i `us ]
-"265
-[; ;main.c: 265:             SystemMode = MODE_RESUME;
-[e = _SystemMode . `E12051 1 ]
-"268
-[; ;main.c: 268:         case MODE_RESUME:
-[e :U 1589 ]
-"269
-[; ;main.c: 269:             TurnOnSSR();
-[e ( _TurnOnSSR ..  ]
-"270
-[; ;main.c: 270:             Blink7Seg( DeadmanTimer_s/60 );
-[e ( _Blink7Seg (1 -> / -> _DeadmanTimer_s `ui -> -> 60 `i `ui `us ]
-"271
-[; ;main.c: 271:             IOCAF2_SetInterruptHandler( INT_PushSW );
+[; ;main.c: 259:     TMR2_SetInterruptHandler( TMR2_Refresh7Seg );
+[e ( _TMR2_SetInterruptHandler (1 &U _TMR2_Refresh7Seg ]
+"261
+[; ;main.c: 261:     IOCAF2_SetInterruptHandler( INT_PushSW );
 [e ( _IOCAF2_SetInterruptHandler (1 &U _INT_PushSW ]
-"272
-[; ;main.c: 272:             SystemMode = MODE_COUNT1;
-[e = _SystemMode . `E12051 2 ]
-"275
-[; ;main.c: 275:         case MODE_COUNT1:
-[e :U 1590 ]
-"277
-[; ;main.c: 277:             Draw7Seg( DeadmanTimer_s/60, DeadmanTimer_s%2, 1 );
-[e ( _Draw7Seg (3 , , -> / -> _DeadmanTimer_s `ui -> -> 60 `i `ui `us -> % -> _DeadmanTimer_s `ui -> -> 2 `i `ui `a -> -> 1 `i `a ]
-"278
-[; ;main.c: 278:             if( DeadmanTimer_s<60 ) SystemMode = MODE_COUNT2;
-[e $ ! < -> _DeadmanTimer_s `ui -> -> 60 `i `ui 1591  ]
-[e = _SystemMode . `E12051 3 ]
+"263
+[; ;main.c: 263:     (INTCONbits.GIE = 1);
+[e = . . _INTCONbits 0 3 -> -> 1 `i `uc ]
+"264
+[; ;main.c: 264:     (INTCONbits.PEIE = 1);
+[e = . . _INTCONbits 0 2 -> -> 1 `i `uc ]
+"266
+[; ;main.c: 266:  while(1) {
 [e :U 1591 ]
-"279
-[; ;main.c: 279:             break;
-[e $U 1586  ]
-"281
-[; ;main.c: 281:         case MODE_COUNT2:
-[e :U 1592 ]
-"283
-[; ;main.c: 283:             Draw7Seg( DeadmanTimer_s, 0, 0 );
-[e ( _Draw7Seg (3 , , _DeadmanTimer_s -> -> 0 `i `a -> -> 0 `i `a ]
-"284
-[; ;main.c: 284:             if( DeadmanTimer_s<=0 ) SystemMode = MODE_STOP;
-[e $ ! <= -> _DeadmanTimer_s `ui -> -> 0 `i `ui 1593  ]
-[e = _SystemMode . `E12051 4 ]
-[e :U 1593 ]
-"285
-[; ;main.c: 285:             break;
-[e $U 1586  ]
-"287
-[; ;main.c: 287:         case MODE_STOP:
-[e :U 1594 ]
-"288
-[; ;main.c: 288:             TurnOffSSR();
-[e ( _TurnOffSSR ..  ]
-"290
-[; ;main.c: 290:             if( DeadmanTimer_s%2 )
-[e $ ! != % -> _DeadmanTimer_s `ui -> -> 2 `i `ui -> -> 0 `i `ui 1595  ]
-"291
-[; ;main.c: 291:                 Draw7Seg( 0, 0, 0 );
-[e ( _Draw7Seg (3 , , -> -> 0 `i `us -> -> 0 `i `a -> -> 0 `i `a ]
-[e $U 1596  ]
-"292
-[; ;main.c: 292:             else
+{
+"268
+[; ;main.c: 268:         _delay((unsigned long)((1000)*(8000000/4000.0)));
+[e ( __delay (1 -> * -> -> 1000 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
+"270
+[; ;main.c: 270:         DeadmanTimer_s--;
+[e -- _DeadmanTimer_s -> -> 1 `i `us ]
+"271
+[; ;main.c: 271:         CheckHumanSensor();
+[e ( _CheckHumanSensor ..  ]
+"272
+[; ;main.c: 272:         HandleSSR();
+[e ( _HandleSSR ..  ]
+"275
+[; ;main.c: 275:         switch( SystemMode ) {
+[e $U 1594  ]
+{
+"276
+[; ;main.c: 276:         case MODE_START:
 [e :U 1595 ]
-"293
-[; ;main.c: 293:                 Clear7Seg();
-[e ( _Clear7Seg ..  ]
+"277
+[; ;main.c: 277:             DeadmanTimer_s = 80;
+[e = _DeadmanTimer_s -> -> 80 `i `us ]
+"278
+[; ;main.c: 278:             SystemMode = MODE_RESUME;
+[e = _SystemMode . `E12051 1 ]
+"279
+[; ;main.c: 279:             Circulate7Seg();
+[e ( _Circulate7Seg ..  ]
+"282
+[; ;main.c: 282:         case MODE_RESUME:
 [e :U 1596 ]
-"294
-[; ;main.c: 294:             break;
-[e $U 1586  ]
+"283
+[; ;main.c: 283:             TurnOnSSR();
+[e ( _TurnOnSSR ..  ]
+"284
+[; ;main.c: 284:             Blink7Seg( DeadmanTimer_s/60 );
+[e ( _Blink7Seg (1 -> / -> _DeadmanTimer_s `ui -> -> 60 `i `ui `us ]
+"285
+[; ;main.c: 285:             IOCAF2_SetInterruptHandler( INT_PushSW );
+[e ( _IOCAF2_SetInterruptHandler (1 &U _INT_PushSW ]
+"286
+[; ;main.c: 286:             SystemMode = MODE_COUNT1;
+[e = _SystemMode . `E12051 2 ]
+"289
+[; ;main.c: 289:         case MODE_COUNT1:
+[e :U 1597 ]
+"291
+[; ;main.c: 291:             Draw7Seg( DeadmanTimer_s/60, DeadmanTimer_s%2, 1 );
+[e ( _Draw7Seg (3 , , -> / -> _DeadmanTimer_s `ui -> -> 60 `i `ui `us -> % -> _DeadmanTimer_s `ui -> -> 2 `i `ui `a -> -> 1 `i `a ]
+"292
+[; ;main.c: 292:             if( DeadmanTimer_s<60 ) SystemMode = MODE_COUNT2;
+[e $ ! < -> _DeadmanTimer_s `ui -> -> 60 `i `ui 1598  ]
+[e = _SystemMode . `E12051 3 ]
+[e :U 1598 ]
+"293
+[; ;main.c: 293:             break;
+[e $U 1593  ]
 "295
-[; ;main.c: 295:         }
-}
-[e $U 1586  ]
-[e :U 1587 ]
-[e [\ -> _SystemMode `ui , $ -> . `E12051 0 `ui 1588
- , $ -> . `E12051 1 `ui 1589
- , $ -> . `E12051 2 `ui 1590
- , $ -> . `E12051 3 `ui 1592
- , $ -> . `E12051 4 `ui 1594
- 1586 ]
-[e :U 1586 ]
-"296
-[; ;main.c: 296:     }
-}
-[e :U 1583 ]
-[e $U 1584  ]
-[e :U 1585 ]
+[; ;main.c: 295:         case MODE_COUNT2:
+[e :U 1599 ]
 "297
-[; ;main.c: 297: }
-[e :UE 1582 ]
+[; ;main.c: 297:             Draw7Seg( DeadmanTimer_s, 0, 0 );
+[e ( _Draw7Seg (3 , , _DeadmanTimer_s -> -> 0 `i `a -> -> 0 `i `a ]
+"298
+[; ;main.c: 298:             if( DeadmanTimer_s<=0 ) SystemMode = MODE_STOP;
+[e $ ! <= -> _DeadmanTimer_s `ui -> -> 0 `i `ui 1600  ]
+[e = _SystemMode . `E12051 4 ]
+[e :U 1600 ]
+"299
+[; ;main.c: 299:             break;
+[e $U 1593  ]
+"301
+[; ;main.c: 301:         case MODE_STOP:
+[e :U 1601 ]
+"302
+[; ;main.c: 302:             TurnOffSSR();
+[e ( _TurnOffSSR ..  ]
+"304
+[; ;main.c: 304:             if( DeadmanTimer_s%2 )
+[e $ ! != % -> _DeadmanTimer_s `ui -> -> 2 `i `ui -> -> 0 `i `ui 1602  ]
+"305
+[; ;main.c: 305:                 Draw7Seg( 0, 0, 0 );
+[e ( _Draw7Seg (3 , , -> -> 0 `i `us -> -> 0 `i `a -> -> 0 `i `a ]
+[e $U 1603  ]
+"306
+[; ;main.c: 306:             else
+[e :U 1602 ]
+"307
+[; ;main.c: 307:                 Clear7Seg();
+[e ( _Clear7Seg ..  ]
+[e :U 1603 ]
+"308
+[; ;main.c: 308:             break;
+[e $U 1593  ]
+"309
+[; ;main.c: 309:         }
+}
+[e $U 1593  ]
+[e :U 1594 ]
+[e [\ -> _SystemMode `ui , $ -> . `E12051 0 `ui 1595
+ , $ -> . `E12051 1 `ui 1596
+ , $ -> . `E12051 2 `ui 1597
+ , $ -> . `E12051 3 `ui 1599
+ , $ -> . `E12051 4 `ui 1601
+ 1593 ]
+[e :U 1593 ]
+"310
+[; ;main.c: 310:     }
+}
+[e :U 1590 ]
+[e $U 1591  ]
+[e :U 1592 ]
+"311
+[; ;main.c: 311: }
+[e :UE 1589 ]
 }

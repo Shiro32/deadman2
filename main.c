@@ -79,8 +79,8 @@ uint16_t HumanSensorTimer_s;
 // -----------------------------------------------------------------------------
 // セグメントのパターン（7seg+DPのON/OFFをバイナリで dp-a-b-c d-e-f-g）
 uint8_t SegPattern[] = 
-	{0x3f, 0x06, 0x5b, 0x4f, 0x66, 0x6d, 0x7d, 0x07, 0x7f, 0x67, 0x40, 0xff};
-
+	{0x3f, 0x06, 0x5b, 0x4f, 0x66, 0x6d, 0x7d, 0x07, 0x7f, 0x67,                // 0-9
+     0b00000001, 0b00000010, 0b00000100, 0b00001000, 0b00010000, 0b00100000};   // 回転（10-15）
 // 現在表示中の２桁(DPも込み)→VRAMみたいなバッファ
 uint8_t SegBuffer[2];
 
@@ -129,6 +129,20 @@ void Draw7Seg( uint16_t value, bool dp, bool zero ) {
 }
 
 // -----------------------------------------------------------------------------
+// 7セグメントLEDを回転させる
+void Circulate7Seg( void ) {
+    uint8_t i, j;
+    
+    for( i=0; i<30; i++) {
+        for( j=10; j<16; j++ ) {
+            SegBuffer[0] = SegPattern[j];
+            SegBuffer[1] = SegPattern[j];
+            __delay_ms( 20 );
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
 // 7セグメントLEDを数回点滅させる
 // value : 表示する数字(0-99)
 void Blink7Seg( uint16_t value ) {
@@ -143,7 +157,6 @@ void Blink7Seg( uint16_t value ) {
     }
 }
 
-// -----------------------------------------------------------------------------
 // 7セグメントLEDを消灯（全セル0x00）
 void Clear7Seg( void ) {
     SegBuffer[0] = 0;
@@ -263,6 +276,7 @@ void main(void)
         case MODE_START:
             DeadmanTimer_s = DEADMAN_TIMER_S;
             SystemMode = MODE_RESUME;
+            Circulate7Seg();
             // break;
 
         case MODE_RESUME:   // TODO: RESUMEだけするのはいつか？

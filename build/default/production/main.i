@@ -20162,8 +20162,8 @@ uint16_t HumanSensorTimer_s;
 
 
 uint8_t SegPattern[] =
- {0x3f, 0x06, 0x5b, 0x4f, 0x66, 0x6d, 0x7d, 0x07, 0x7f, 0x67, 0x40, 0xff};
-
+ {0x3f, 0x06, 0x5b, 0x4f, 0x66, 0x6d, 0x7d, 0x07, 0x7f, 0x67,
+     0b00000001, 0b00000010, 0b00000100, 0b00001000, 0b00010000, 0b00100000};
 
 uint8_t SegBuffer[2];
 
@@ -20213,6 +20213,20 @@ void Draw7Seg( uint16_t value, _Bool dp, _Bool zero ) {
 
 
 
+void Circulate7Seg( void ) {
+    uint8_t i, j;
+
+    for( i=0; i<30; i++) {
+        for( j=10; j<16; j++ ) {
+            SegBuffer[0] = SegPattern[j];
+            SegBuffer[1] = SegPattern[j];
+            _delay((unsigned long)((20)*(8000000/4000.0)));
+        }
+    }
+}
+
+
+
 
 void Blink7Seg( uint16_t value ) {
     uint8_t i;
@@ -20225,7 +20239,6 @@ void Blink7Seg( uint16_t value ) {
         _delay((unsigned long)((200)*(8000000/4000.0))) ;
     }
 }
-
 
 
 void Clear7Seg( void ) {
@@ -20346,6 +20359,7 @@ void main(void)
         case MODE_START:
             DeadmanTimer_s = 80;
             SystemMode = MODE_RESUME;
+            Circulate7Seg();
 
 
         case MODE_RESUME:
