@@ -137,7 +137,7 @@ void Circulate7Seg( void ) {
         for( j=10; j<16; j++ ) {
             SegBuffer[0] = SegPattern[j];
             SegBuffer[1] = SegPattern[j];
-            __delay_ms( 15 );
+            __delay_ms( 10 );
         }
     }
 }
