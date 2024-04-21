@@ -49,12 +49,12 @@
  */
 
 // -----------------------------------------------------------------------------
-#define DEADMAN_TIMER_S             80     // デッドマンタイマー（秒）
-#define DEADMAN_TIMER_INCREMENT_S   600     // １ボタンプッシュで増える時間（秒）
-#define HUMAN_SENSOR_TIMER_s        30      // 人感センサーによってオフにする時間（秒）
+#define DEADMAN_TIMER_S             600     // デッドマンタイマー（秒）
+#define DEADMAN_TIMER_INCREMENT_S   300     // １ボタンプッシュで増える時間（秒）
+#define HUMAN_SENSOR_TIMER_s        15      // 人感センサーによってオフにする時間（秒）
 
 #define SEG_DP                      0b10000000
-#define HUMAN_SENSOR_CALIB_TERM     5
+#define HUMAN_SENSOR_CALIB_TERM     3
 
 
 bool SSROutputStatus = false;
@@ -73,7 +73,7 @@ SystemMode_t SystemMode;
 
 // デッドマンタイマーそのもの
 uint16_t DeadmanTimer_s;
-uint16_t HumanSensorTimer_s;
+int16_t HumanSensorTimer_s;
 
 
 // -----------------------------------------------------------------------------
@@ -97,14 +97,14 @@ void TMR2_Refresh7Seg( void ) {
 	if( pos<=7 ) {      	// 10の桁（左セグメント）
 		GPIO_SEG7_10_LAT = 1;
         GPIO_SEG7_1_LAT  = 0;
-        LATB = ~(SegBuffer[1] & mask);
+        LATC = ~(SegBuffer[1] & mask);
         // TODO: Bポートは名前つけられないんだっけ？
-        // LATB = LATBitsだとは思うが、LAT自体なんとかならんのか・・・？
+        // LATC = LATCBitsだとは思うが、LAT自体なんとかならんのか・・・？
     }
 	else {                  // 1の桁（右セグメント）
         GPIO_SEG7_10_LAT = 0;
 		GPIO_SEG7_1_LAT	 = 1;
-        LATB = ~(SegBuffer[0] & mask);
+        LATC = ~(SegBuffer[0] & mask);
 	}
 
 	// マスクポジションを進める
@@ -133,11 +133,11 @@ void Draw7Seg( uint16_t value, bool dp, bool zero ) {
 void Circulate7Seg( void ) {
     uint8_t i, j;
     
-    for( i=0; i<30; i++) {
+    for( i=0; i<10; i++) {
         for( j=10; j<16; j++ ) {
             SegBuffer[0] = SegPattern[j];
             SegBuffer[1] = SegPattern[j];
-            __delay_ms( 10 );
+            __delay_ms( 50 );
         }
     }
 }
@@ -149,7 +149,7 @@ void Blink7Seg( uint16_t value ) {
     uint8_t i;
     
     for( i=0; i<3; i++ ) {
-        Draw7Seg( value, false, false );
+        Draw7Seg( value, false, true );
         __delay_ms( 200 );
         SegBuffer[0] = 0;
         SegBuffer[1] = 0;
@@ -171,8 +171,14 @@ void Clear7Seg( void ) {
 void INT_PushSW( void ) {
     IOCAF2 = 0;
     IOCAF2_SetInterruptHandler(NULL);
-    DeadmanTimer_s += DEADMAN_TIMER_INCREMENT_S;
-    SystemMode = MODE_RESUME;
+    
+    if( DeadmanTimer_s<=0 ) {
+        DeadmanTimer_s = DEADMAN_TIMER_S;
+        SystemMode = MODE_START;
+    } else {
+        DeadmanTimer_s += DEADMAN_TIMER_INCREMENT_S;
+        SystemMode = MODE_RESUME;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -237,7 +243,7 @@ bool AverageHumanSensor() {
     buf[0] = GPIO_PIR_PORT;
     sum+=buf[0];
 
-    return ( (float)sum/HUMAN_SENSOR_CALIB_TERM > 0.1 ) ? true:false;
+    return ( (float)sum/HUMAN_SENSOR_CALIB_TERM > 0.5 ) ? true:false;
 }
 
 
@@ -263,6 +269,7 @@ void main(void)
     INTERRUPT_GlobalInterruptEnable();
     INTERRUPT_PeripheralInterruptEnable();
     
+
 	while(1) {
         //TODO: 1秒完全待機のために遅くなる。プリスケーラーで対応できないか？
         __delay_ms(1000);
@@ -289,12 +296,12 @@ void main(void)
         case MODE_COUNT1:
             // 分単位で表示する
             Draw7Seg( DeadmanTimer_s/60, DeadmanTimer_s%2, true );
-            if( DeadmanTimer_s<60 ) SystemMode = MODE_COUNT2;
+            if( DeadmanTimer_s<=60 ) SystemMode = MODE_COUNT2;
             break;
 
         case MODE_COUNT2:
             // 秒単位で表示する
-            Draw7Seg( DeadmanTimer_s, false, false );
+            Draw7Seg( DeadmanTimer_s, false, true );
             if( DeadmanTimer_s<=0 ) SystemMode = MODE_STOP;
             break;
 
